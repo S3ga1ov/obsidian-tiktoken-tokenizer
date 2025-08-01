@@ -1,6 +1,7 @@
 {
 	"name": "tiktoken-tokenizer",
 	"version": "1.0.0",
+	"private": true,
 	"description": "Displays the token count of the active note in the status bar using TikToken.",
 	"main": "main.js",
 	"scripts": {
