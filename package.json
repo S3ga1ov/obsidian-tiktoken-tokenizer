@@ -1,6 +1,6 @@
 {
 	"name": "tiktoken-tokenizer",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"private": true,
 	"description": "Displays the token count of the active note in the status bar using TikToken.",
 	"main": "main.js",
@@ -12,6 +12,25 @@
 	"keywords": ["tokenizer"],
 	"author": "Basil Segalov",
 	"license": "MIT",
+
+	"release": {
+		"branches": ["main"],             
+		"plugins": [
+		  "@semantic-release/commit-analyzer",
+		  "@semantic-release/release-notes-generator",
+		  [
+			"@semantic-release/github",
+			{
+			  "assets": [
+				{ "path": "main.js",            "label": "Plugin bundle" },
+				{ "path": "tiktoken_bg.wasm",   "label": "Token WASM"   },
+				{ "path": "manifest.json",      "label": "Manifest"     }
+			  ]
+			}
+		  ]
+		]
+	},
+	
 	"devDependencies": {
 		"@dqbd/tiktoken": "^1.0.21",
 		"@types/node": "^16.11.6",
