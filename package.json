@@ -18,6 +18,9 @@
 		"plugins": [
 		  "@semantic-release/commit-analyzer",
 		  "@semantic-release/release-notes-generator",
+		  ["@semantic-release/exec", {
+			"prepareCmd": "node -e 'const fs=require(\"fs\");const m=JSON.parse(fs.readFileSync(\"manifest.json\",\"utf8\"));m.version=\"${nextRelease.version}\";fs.writeFileSync(\"manifest.json\",JSON.stringify(m,null,2)+\"\\n\");'"
+		  }], 
 		  [
 			"@semantic-release/github",
 			{
@@ -33,6 +36,7 @@
 	
 	"devDependencies": {
 		"@dqbd/tiktoken": "^1.0.22",
+		"@semantic-release/exec": "^7.1.0",
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
