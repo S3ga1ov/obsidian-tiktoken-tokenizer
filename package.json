@@ -1,6 +1,6 @@
 {
 	"name": "tiktoken-tokenizer",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"private": true,
 	"description": "Displays the token count of the active note in the status bar using TikToken.",
 	"main": "main.js",
@@ -32,7 +32,7 @@
 	},
 	
 	"devDependencies": {
-		"@dqbd/tiktoken": "^1.0.21",
+		"@dqbd/tiktoken": "^1.0.22",
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",

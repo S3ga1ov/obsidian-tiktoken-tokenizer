@@ -3,9 +3,9 @@
 	"name": "TikToken Tokenizer",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Displays the token count of the active note in the status bar using TikToken.",
+	"description": "Displays the token count of the active note in the status bar using TikToken",
 	"author": "Basil Segalov",
 	"authorUrl": "https://github.com/S3ga1ov",
 	"fundingUrl": "https://github.com/S3ga1ov",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }
