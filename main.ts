@@ -1,20 +1,19 @@
-import { Plugin, MarkdownView, apiVersion } from 'obsidian';
+import { Plugin, MarkdownView, debounce } from 'obsidian';
 import { get_encoding, Tiktoken } from '@dqbd/tiktoken';
 import { init } from '@dqbd/tiktoken/init';
-import * as fs from 'fs/promises';
 
 export default class TiktokenTokenizerPlugin extends Plugin {
     statusBarItemEl: HTMLElement;
     private enc: Tiktoken | null = null;
     private initialized = false;
+    private updateTokenCountDebounced = (_: void) => {};
 
     async onload() {
         this.statusBarItemEl = this.addStatusBarItem();
         this.statusBarItemEl.setText("Initializing tokenizer...");
 
         try {
-            const wasmPath = `${(this.app.vault.adapter as any).getBasePath()}/${this.manifest.dir}/tiktoken_bg.wasm`;
-            const wasmBuffer = await fs.readFile(wasmPath);
+            const wasmBuffer = await this.app.vault.adapter.readBinary(`${this.manifest.dir}/tiktoken_bg.wasm`);
             
             await init((imports) => WebAssembly.instantiate(wasmBuffer, imports));
 
@@ -29,8 +28,14 @@ export default class TiktokenTokenizerPlugin extends Plugin {
             return;
         }
 
-        this.registerEvent(this.app.workspace.on('editor-change', () => this.updateTokenCount()));
-        this.registerEvent(this.app.workspace.on('active-leaf-change', () => this.updateTokenCount()));
+        this.updateTokenCountDebounced = debounce(
+            () => this.updateTokenCount(),
+            150,
+            true
+        );
+
+        this.registerEvent(this.app.workspace.on('editor-change', () => this.updateTokenCountDebounced()));
+        this.registerEvent(this.app.workspace.on('active-leaf-change', () => this.updateTokenCountDebounced()));
     }
 
     updateTokenCount() {
